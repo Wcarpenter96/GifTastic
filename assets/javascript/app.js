@@ -11,19 +11,24 @@ function displayGifs() {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         response.data.forEach(gif => {
-            $gif = $(`<img src="${gif.images.original_still.url}">`);
-            $gif.addClass('gif');
+            $gif = $('<img>');
+            $gif.addClass('gif').attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url);
+            $($gif).attr('src', $($gif).attr('stop'))
             $('#gifs-view').append($gif);
         });
     });
 
 }
 
-function playGif(){
-    console.log('play');
+function toggleGif() {
+    if ($(this).attr('src') === $(this).attr('stop')) {
+        $(this).attr('src', $(this).attr('play'));
+    }else{
+        $(this).attr('src', $(this).attr('stop'))
+    }
 }
+
 
 
 // Function for re-rendering default and user-initialized buttons
@@ -39,7 +44,7 @@ function renderButtons() {
     }
 }
 
-$("#add-show").on("click", function(event) {
+$("#add-show").on("click", function (event) {
     event.preventDefault();
     var show = $("#show-input").val()
     shows.push(show);
@@ -48,6 +53,6 @@ $("#add-show").on("click", function(event) {
 
 
 $(document).on("click", ".show", displayGifs);
-$(document).on("click", ".gif", playGif);
+$(document).on("click", ".gif", toggleGif);
 renderButtons();
 
