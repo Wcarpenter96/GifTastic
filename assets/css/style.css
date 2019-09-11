@@ -1,8 +1,34 @@
+body {
+    background-image: url("./../images/papyrus.png");
+    font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+    color:rgb(97, 97, 97) !important;
+}
+div{
+    background-color:rgba(107, 107, 107, 0.164);
+    border-radius:10px;
+}
+
 img{
-    height:200px;
+    height:150px !important;
+    margin:10px;
 }
 
 img:hover{
     cursor:pointer;
     opacity:0.9
+}
+
+button,#add-show{
+    background-color:rgb(80, 182, 182);
+    color:white;
+    padding:10px;
+    margin:5px !important;
+    border-radius:10px !important;
+}
+button:hover,#add-show:hover{
+    opacity:0.8;
+}
+
+.userInputCol{
+    border:solid 1px rgba(128, 128, 128, 0.342);
 }

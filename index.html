@@ -7,27 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GifTastic</title>
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Rendered buttons will get dumped here  -->
-            <div class="col" id="buttons-view"></div>
+            <!-- Rendered buttons will get displayed here  -->
+            <div class="col m-5" id="buttons-view"></div>
         </div>
-        <div class="row">
-            <div class="col">
-                <!-- Shows will get dumped here -->
-                <div id="gifs-view"></div>
-            </div>
-            <div class="col">
-                <form id="show-form">
-                    <label for="show-input">Add an show</label>
-                    <input type="text" id="show-input"><br>
-
-                    <!-- Button triggers new show to be added -->
-                    <input id="add-show" type="submit" value="Submit">
-                </form>
+        <div class="row justify-content-center">
+                <div class="col-2-lg userInputCol">
+                        <form id="show-form" class="m-3">
+                            <label for="show-input">Add Another Button...</label>
+                            <input type="text" id="show-input"><br>
+        
+                            <!-- Button triggers new show button to be added -->
+                            <input id="add-show" type="submit" value="Add Button">
+                        </form>
+                    </div>
+            <div class="col-8">
+                <!-- Gifs will be displayed here -->
+                <div class="m-5" id="gifs-view"></div>
             </div>
         </div>
     </div>

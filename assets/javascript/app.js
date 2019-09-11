@@ -1,49 +1,10 @@
-// Initial array of shows
-shows = ["Friends", "Game of Thrones", "Modern Family", "Psych", "The Office"];
+// How many Gifs to display in the #gifs-view
 var numGifs = 10;
 
-// displayGifs function displays "numGifs" amount of "show" gifs with their respective ratings
-function displayGifs() {
+// Initial array of shows
+shows = ["Friends", "Game of Thrones", "Modern Family", "Psych", "The Office"];
 
-    var show = $(this).attr("data-name");
-    var queryURL = `http://api.giphy.com/v1/gifs/search?q=${show}&api_key=HRrMbCNwCHClP2xPAixFjjvPSkGL784T&limit=${numGifs}`
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function (response) {
-        response.data.forEach(gif => {
-            $gif = $('<img>');
-            $gif.addClass('gif').attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url);
-            $($gif).attr('src', $($gif).attr('stop'))
-            $('#gifs-view').append($gif);
-        });
-    });
-
-}
-
-function toggleGif() {
-    if ($(this).attr('src') === $(this).attr('stop')) {
-        $(this).attr('src', $(this).attr('play'));
-    }else{
-        $(this).attr('src', $(this).attr('stop'))
-    }
-}
-
-
-
-// Function for re-rendering default and user-initialized buttons
-function renderButtons() {
-
-    $("#buttons-view").empty();
-    for (var i = 0; i < shows.length; i++) {
-        var btn = $("<button>");
-        btn.addClass("show");
-        btn.attr("data-name", shows[i]);
-        btn.text(shows[i]);
-        $("#buttons-view").append(btn);
-    }
-}
-
+// Initializes another user-created show button
 $("#add-show").on("click", function (event) {
     event.preventDefault();
     var show = $("#show-input").val()
@@ -51,8 +12,48 @@ $("#add-show").on("click", function (event) {
     renderButtons();
 });
 
+// Function for re-rendering default and user-initialized buttons
+function renderButtons() {
 
-$(document).on("click", ".show", displayGifs);
-$(document).on("click", ".gif", toggleGif);
+    $("#buttons-view").empty();
+    for (var i = 0; i < shows.length; i++) {
+        var $btn = $("<button>").addClass("show");
+        $btn.text(shows[i]).attr("data-name", shows[i]);
+        $("#buttons-view").append($btn);
+    }
+}
+
+// displayGifs function displays "numGifs" amount of "show" gifs with their respective ratings
+function displayGifs() {
+    const $gifs = $('<div>')
+    var show = $(this).attr("data-name");
+    var queryURL = `http://api.giphy.com/v1/gifs/search?q=${show}&api_key=HRrMbCNwCHClP2xPAixFjjvPSkGL784T&limit=${numGifs}`
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        response.data.forEach(gif => {
+            const $gif = $('<img>').addClass('img-fluid');
+            $gif.attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url);
+            $gif.attr('src', $($gif).attr('stop'));
+            $gifs.append($gif);
+        });
+        $('#gifs-view').html($gifs);
+    });
+}
+
+// Plays and Pauses Gif
+function toggleGif() {
+    if ($(this).attr('src') === $(this).attr('stop')) {
+        $(this).attr('src', $(this).attr('play'));
+    }else{
+        $(this).attr('src', $(this).attr('stop'));
+    }
+}
+
+
 renderButtons();
+$(document).on("click", ".show", displayGifs);
+$(document).on("click", "img", toggleGif);
+
 
