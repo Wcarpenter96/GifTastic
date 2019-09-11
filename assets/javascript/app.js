@@ -27,7 +27,7 @@ function renderButtons() {
 function displayGifs() {
     const $gifs = $('<div>')
     var show = $(this).attr("data-name");
-    var queryURL = `http://api.giphy.com/v1/gifs/search?q=${show}&api_key=HRrMbCNwCHClP2xPAixFjjvPSkGL784T&limit=${numGifs}`
+    var queryURL = `https://api.giphy.com/v1/gifs/search?q=${show}&api_key=HRrMbCNwCHClP2xPAixFjjvPSkGL784T&limit=${numGifs}`
     $.ajax({
         url: queryURL,
         method: "GET"
