@@ -33,9 +33,12 @@ function displayGifs() {
         method: "GET"
     }).then(function (response) {
         response.data.forEach(gif => {
-            const $gif = $('<img>').addClass('img-fluid');
-            $gif.attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url);
-            $gif.attr('src', $($gif).attr('stop'));
+            const $gif = $('<div>').css('float','left').css('text-align','center');
+            const $rating = $('<h5>').text(gif.rating.toUpperCase());
+            const $pic = $('<img>').addClass('img-fluid');
+            $pic.attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url);
+            $pic.attr('src', $($pic).attr('stop'));
+            $gif.append($pic,$rating);
             $gifs.append($gif);
         });
         $('#gifs-view').html($gifs);
