@@ -39,12 +39,27 @@ function displayGifs() {
         method: "GET"
     }).then(function (response) {
         response.data.forEach(gif => {
-            const $gif = $('<div>').css('float', 'left').css('text-align', 'left');
+            const $gif = $('<div>').css('float', 'left').css('text-align', 'left').css("position", "relative")
             const $like = $('<button>').text('♥').addClass('gifBtn').attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url).attr("rating", gif.rating.toUpperCase());
-            const $rate = $('<h5>').text(gif.rating.toUpperCase())
+            $like.css({
+                "position": "absolute",
+                "z-index": "9999",
+                "bottom": "10px",
+                "right": "10px",
+                "padding": "10px"
+            });
+            const $rate = $('<h6>').text(`${gif.rating.toUpperCase()} Rated`)
+            $rate.css({
+                "position": "absolute",
+                "z-index": "9999",
+                "top": "10px",
+                "left": "10px",
+                "color": "white",
+                "backgroundColor": "rgba(107, 107, 107, 0.8)",
+            });
             const $pic = $('<img>').addClass('img-fluid')
             $pic.attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url);
-            $pic.attr('src', $($pic).attr('stop'));
+            $pic.attr('src', $($pic).attr('stop'))
             $gif.append($pic, $rate, $like);
             $gifs.append($gif);
         });
@@ -67,9 +82,24 @@ function loadFavoriteGifs() {
     ratingArr = JSON.parse(localStorage.getItem('rating'));
     $favs = $('<div>');
     for (let i = 0; i < playArr.length; i++) {
-        const $gif = $('<div>').css('float', 'left').css('text-align', 'left');
-        const $like = $('<button>').text('X').addClass('gifBtnFav').attr('index', i);
-        const $rate = $('<h5>').text(ratingArr[i]);
+        const $gif = $('<div>').css('float', 'left').css('text-align', 'left').css("position", "relative");
+        const $like = $('<button>').text('x').addClass('gifBtnFav').attr('index', i);
+        $like.css({
+            "position": "absolute",
+            "z-index": "9999",
+            "bottom": "10px",
+            "right": "10px",
+            "padding": "10px"
+        });
+        const $rate = $('<h6>').text(`${ratingArr[i]} Rated`)
+        $rate.css({
+            "position": "absolute",
+            "z-index": "9999",
+            "top": "10px",
+            "left": "10px",
+            "color": "white",
+            "backgroundColor": "rgba(107, 107, 107, 0.8)",
+        });
         const $pic = $('<img>').addClass('img-fluid');
         $pic.attr("play", playArr[i]).attr("stop", stopArr[i]);
         $pic.attr('src', $($pic).attr('stop'));
