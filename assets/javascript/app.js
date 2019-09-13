@@ -1,8 +1,14 @@
 // How many Gifs to display in the #gifs-view
 var numGifs = 10;
-
 // Initial array of shows
 shows = ["Friends", "Game of Thrones", "Modern Family", "Psych", "The Office"];
+var gifsArr = [];
+var playArr = [];
+var stopArr = [];
+var ratingArr = [];
+
+if (localStorage.getItem('play') !== null)
+    loadFavoriteGifs();
 
 // Initializes another user-created show button
 $("#add-show").on("click", function (event) {
@@ -33,12 +39,13 @@ function displayGifs() {
         method: "GET"
     }).then(function (response) {
         response.data.forEach(gif => {
-            const $gif = $('<div>').css('float','left').css('text-align','center');
-            const $rating = $('<h5>').text(gif.rating.toUpperCase());
-            const $pic = $('<img>').addClass('img-fluid');
+            const $gif = $('<div>').css('float', 'left').css('text-align', 'left');
+            const $like = $('<button>').text('♥').addClass('gifBtn').attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url).attr("rating", gif.rating.toUpperCase());
+            const $rate = $('<h5>').text(gif.rating.toUpperCase())
+            const $pic = $('<img>').addClass('img-fluid')
             $pic.attr("play", gif.images.original.url).attr("stop", gif.images.original_still.url);
             $pic.attr('src', $($pic).attr('stop'));
-            $gif.append($pic,$rating);
+            $gif.append($pic, $rate, $like);
             $gifs.append($gif);
         });
         $('#gifs-view').html($gifs);
@@ -49,14 +56,54 @@ function displayGifs() {
 function toggleGif() {
     if ($(this).attr('src') === $(this).attr('stop')) {
         $(this).attr('src', $(this).attr('play'));
-    }else{
+    } else {
         $(this).attr('src', $(this).attr('stop'));
     }
 }
 
+function loadFavoriteGifs() {
+    playArr = JSON.parse(localStorage.getItem('play'));
+    stopArr = JSON.parse(localStorage.getItem('stop'));
+    ratingArr = JSON.parse(localStorage.getItem('rating'));
+    $favs = $('<div>');
+    for (let i = 0; i < playArr.length; i++) {
+        const $gif = $('<div>').css('float', 'left').css('text-align', 'left');
+        const $like = $('<button>').text('X').addClass('gifBtnFav').attr('index', i);
+        const $rate = $('<h5>').text(ratingArr[i]);
+        const $pic = $('<img>').addClass('img-fluid');
+        $pic.attr("play", playArr[i]).attr("stop", stopArr[i]);
+        $pic.attr('src', $($pic).attr('stop'));
+        $gif.append($pic, $rate, $like);
+        $favs.append($gif);
+    }
+    $('#favorites').html($favs);
+}
+
+function favoriteGif() {
+
+    playArr.push($(this).attr('play'));
+    stopArr.push($(this).attr('stop'));
+    ratingArr.push($(this).attr('rating'));
+    localStorage.setItem('play', JSON.stringify(playArr));
+    localStorage.setItem('stop', JSON.stringify(stopArr));
+    localStorage.setItem('rating', JSON.stringify(ratingArr));
+    loadFavoriteGifs();
+}
+
+function unfavoriteGif() {
+    playArr.splice($(this).attr('index'), 1);
+    stopArr.splice($(this).attr('index'), 1);
+    ratingArr.splice($(this).attr('index'), 1);
+    localStorage.setItem('play', JSON.stringify(playArr));
+    localStorage.setItem('stop', JSON.stringify(stopArr));
+    localStorage.setItem('rating', JSON.stringify(ratingArr));
+    loadFavoriteGifs();
+}
 
 renderButtons();
 $(document).on("click", ".show", displayGifs);
 $(document).on("click", "img", toggleGif);
+$(document).on("click", ".gifBtn", favoriteGif);
+$(document).on("click", ".gifBtnFav", unfavoriteGif);
 
 

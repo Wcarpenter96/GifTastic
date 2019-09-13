@@ -15,21 +15,28 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Rendered buttons will get displayed here  -->
-            <div class="col m-5" id="buttons-view" ></div>
+            <div class="col m-5" id="buttons-view"></div>
         </div>
         <div class="row justify-content-center">
-                <div class="col-2-lg userInputCol">
-                        <form id="show-form" class="m-3">
-                            <label for="show-input">Add Another Button...</label>
-                            <input type="text" id="show-input"><br>
-        
-                            <!-- Button triggers new show button to be added -->
-                            <input id="add-show" type="submit" value="Add Button">
-                        </form>
-                    </div>
-            <div class="col-8">
+            <div class="col-2-lg userInputCol">
+                <form id="show-form" class="m-3">
+                    <label for="show-input">Add Another Button...</label>
+                    <input type="text" id="show-input"><br>
+
+                    <!-- Button triggers new show button to be added -->
+                    <input id="add-show" type="submit" value="Add Button">
+                </form>
+            </div>
+            <div class="col-4">
                 <!-- Gifs will be displayed here -->
                 <div class="m-5" id="gifs-view"></div>
+            </div>
+            <div class="col-4 userInputCol">
+                <!-- Favorites section-->
+                <div class="text-center text-white">
+                    <h3 class=>Favorites &hearts;</h1>
+                    <div id="favorites"></div>
+                </div>
             </div>
         </div>
     </div>
